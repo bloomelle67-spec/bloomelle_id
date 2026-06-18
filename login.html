@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomelle | Masuk</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cream: '#fff8f2',
+            sage: '#a9b9a3',
+            terracotta: '#c96a5c',
+            blush: '#efb6ae',
+            charcoal: '#1f2937'
+          },
+          boxShadow: {
+            soft: '0 18px 45px rgba(15, 23, 42, 0.10)',
+            glow: '0 24px 60px rgba(201, 106, 92, 0.18)'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root { color-scheme: light; }
+    html.dark { color-scheme: dark; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(201,106,92,0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(169,185,163,0.20), transparent 30%),
+        linear-gradient(180deg, #fffaf6, #fff8f2);
+      min-height: 100vh;
+    }
+    html.dark body {
+      background:
+        radial-gradient(circle at top left, rgba(201,106,92,0.16), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(169,185,163,0.14), transparent 30%),
+        linear-gradient(180deg, #0b1016, #101722);
+    }
+    .glass {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.40);
+    }
+    html.dark .glass {
+      background: rgba(15,23,42,0.76);
+      border-color: rgba(148,163,184,0.10);
+    }
+    .hero-card {
+      background: linear-gradient(135deg, rgba(201,106,92,0.16), rgba(239,182,174,0.16));
+      border: 1px solid rgba(201,106,92,0.14);
+    }
+    .soft-shadow { box-shadow: 0 24px 60px rgba(15,23,42,0.12); }
+    .fade-up { animation: fadeUp 700ms ease both; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .field {
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+    .field:focus-within {
+      border-color: rgba(201,106,92,0.58);
+      box-shadow: 0 0 0 4px rgba(201,106,92,0.12);
+      transform: translateY(-1px);
+    }
+    .secret-text {
+      -webkit-text-security: disc;
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      z-index: 80;
+      transition: opacity 260ms ease, transform 260ms ease;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body class="text-slate-800 dark:text-slate-100">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#e8a58f]/20 blur-3xl"></div>
+    <div class="absolute right-0 top-44 h-96 w-96 rounded-full bg-[#c96a5c]/15 blur-3xl"></div>
+  </div>
+
+  <main class="mx-auto flex min-h-screen max-w-lg items-center px-4 py-6 lg:px-8 lg:py-8">
+    <section class="fade-up glass soft-shadow w-full rounded-[28px] p-5 sm:p-7 lg:p-8">
+      <div class="flex flex-col items-center text-center">
+        <div class="grid h-14 w-14 place-items-center overflow-hidden rounded-full border border-slate-200 bg-white text-charcoal shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-white">
+          <img src="logo.jpeg" alt="Bloomelle logo" class="h-full w-full rounded-full object-cover" />
+        </div>
+        <h1 class="mt-4 text-3xl font-black tracking-tight text-charcoal dark:text-white">Masuk ke Bloomelle</h1>
+      </div>
+
+      <form id="loginForm" class="mt-6 space-y-4" autocomplete="off" novalidate>
+          <label class="block">
+            <span class="text-sm font-bold text-slate-600 dark:text-slate-300">Masuk akun</span>
+            <div class="field mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-950/70">
+              <i class="fa-regular fa-envelope text-slate-400"></i>
+              <input id="email" name="bloomelle-login-email" type="text" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" class="w-full bg-transparent outline-none placeholder:text-slate-400 dark:text-slate-100" placeholder="Masukkan akun kamu" />
+            </div>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-bold text-slate-600 dark:text-slate-300">Kunci masuk</span>
+            <div class="field mt-2 flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-950/70">
+              <i class="fa-solid fa-lock text-slate-400"></i>
+              <input id="password" name="bloomelle-login-password" type="text" autocomplete="off" class="secret-text w-full bg-transparent outline-none placeholder:text-slate-400 dark:text-slate-100" placeholder="Masukkan kunci masuk" />
+              <button id="togglePassword" class="text-sm font-bold text-terracotta" type="button">Lihat</button>
+            </div>
+          </label>
+
+          <div class="flex items-center justify-between gap-4 text-sm">
+            <label class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+              <input id="rememberMe" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-terracotta focus:ring-terracotta" />
+              Ingat saya
+            </label>
+          </div>
+
+          <p id="errorBox" class="hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-200"></p>
+
+          <button type="submit" class="mt-2 w-full rounded-2xl bg-slate-900 px-5 py-4 font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100">Masuk Sekarang</button>
+        </form>
+    </section>
+  </main>
+
+  <div id="toast" class="toast rounded-2xl bg-charcoal px-5 py-3 text-sm font-bold text-white shadow-soft dark:bg-white dark:text-charcoal">Login berhasil</div>
+
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const auth = window.BloomelleAuth.getAuthUser();
+      const redirectRaw = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+      const redirectParam = decodeURIComponent(redirectRaw);
+      if (auth) {
+        window.location.replace(redirectParam);
+        return;
+      }
+
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const togglePassword = document.getElementById('togglePassword');
+      const rememberMe = document.getElementById('rememberMe');
+      const errorBox = document.getElementById('errorBox');
+      const toast = document.getElementById('toast');
+
+      emailInput.value = '';
+      passwordInput.value = '';
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+      }
+
+      function clearError() {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        window.setTimeout(() => toast.classList.remove('show'), 1500);
+      }
+
+      togglePassword.addEventListener('click', () => {
+        const isHidden = passwordInput.classList.contains('secret-text');
+        passwordInput.classList.toggle('secret-text');
+        togglePassword.textContent = isHidden ? 'Sembunyi' : 'Lihat';
+      });
+
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        clearError();
+
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value.trim();
+
+        if (!email || !password) {
+          showError('Email dan password wajib diisi.');
+          return;
+        }
+
+        window.BloomelleAuth.persistAuth({
+          email,
+          name: email.split('@')[0] || 'Bloomelle User'
+        }, rememberMe.checked);
+
+        showToast('Login berhasil');
+        window.setTimeout(() => window.location.replace(redirectParam), 450);
+      });
+
+    });
+  </script>
+</body>
+</html>

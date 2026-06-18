@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomelle | Detail Produk Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="site.css" />
+  <style>
+    :root {
+      --bg: #f8f1ea;
+      --surface: rgba(255, 250, 246, 0.82);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --text: #201915;
+      --muted: #6d6259;
+      --accent: #c96a5c;
+      --accent-soft: #e7a18e;
+      --border: rgba(201, 106, 92, 0.16);
+      --shadow: 0 22px 70px rgba(46, 24, 17, 0.12);
+    }
+    html.dark {
+      --bg: #0d1320;
+      --surface: rgba(15, 23, 42, 0.82);
+      --surface-strong: rgba(15, 23, 42, 0.96);
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --accent: #f0a291;
+      --accent-soft: #f6c7bc;
+      --border: rgba(240, 162, 145, 0.16);
+      --shadow: 0 22px 70px rgba(2, 6, 23, 0.36);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(201,106,92,0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(232,165,143,0.14), transparent 28%),
+        linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 82%, white));
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input { font: inherit; }
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .pill {
+      background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+      border: 1px solid var(--border);
+    }
+    .page-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 18px 40px;
+    }
+    .hero {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: start;
+    }
+    .hero-media {
+      display: grid;
+      gap: 14px;
+    }
+    .hero-main {
+      position: relative;
+      overflow: hidden;
+      border-radius: 32px;
+      min-height: 520px;
+      background: linear-gradient(135deg, rgba(201,106,92,0.12), rgba(232,165,143,0.14));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .hero-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms ease;
+    }
+    .hero-main:hover img { transform: scale(1.04); }
+    .hero-badge {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      z-index: 2;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      background: linear-gradient(135deg, #c96a5c, #e8a58f);
+      box-shadow: 0 14px 30px rgba(201,106,92,0.28);
+    }
+    .thumbs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .thumb {
+      overflow: hidden;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+      padding: 8px;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+    .thumb:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .thumb.active { border-color: rgba(201,106,92,0.55); box-shadow: 0 18px 45px rgba(201,106,92,0.14); }
+    .thumb img { width: 100%; height: 86px; object-fit: cover; border-radius: 16px; }
+    .detail-card {
+      border-radius: 32px;
+      padding: 26px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .price-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    .price-old {
+      color: var(--muted);
+      text-decoration: line-through;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .price-new {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
+    }
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .section-copy { color: var(--muted); line-height: 1.85; margin: 0; }
+    .grid-2 {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .grid-3 {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .mini-card {
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .bundle-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .bundle-price {
+      min-width: 132px;
+      text-align: left;
+    }
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .qty-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface-strong);
+    }
+    .qty-box button {
+      width: 46px;
+      height: 46px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .qty-box span {
+      min-width: 52px;
+      text-align: center;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline {
+      border: 0;
+      border-radius: 18px;
+      min-height: 54px;
+      padding: 0 18px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, #c96a5c, #e8a58f);
+      box-shadow: 0 18px 38px rgba(201,106,92,0.24);
+    }
+    .btn-secondary,
+    .btn-outline {
+      background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .btn-outline:hover { transform: translateY(-2px); }
+    .bundle-grid,
+    .related-grid,
+    .review-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .review-card {
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .stars { color: #f59e0b; letter-spacing: 1px; }
+    .sticky-box {
+      position: sticky;
+      top: 16px;
+      display: grid;
+      gap: 16px;
+    }
+    .stock-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148,163,184,0.18);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .stock-bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #c96a5c, #e8a58f);
+    }
+    .floating-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 14px 18px;
+      background: #25d366;
+      color: white;
+      font-weight: 900;
+      box-shadow: 0 18px 34px rgba(37,211,102,0.24);
+    }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(18px);
+      opacity: 0;
+      z-index: 70;
+      transition: opacity 220ms ease, transform 220ms ease;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .quick-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+    .quick-modal.open { opacity: 1; pointer-events: auto; }
+    .quick-modal .glass {
+      width: min(100%, 860px);
+      transform: translateY(12px) scale(0.98);
+      transition: transform 220ms ease;
+      border-radius: 30px;
+      overflow: hidden;
+    }
+    .quick-modal.open .glass { transform: translateY(0) scale(1); }
+    .backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,23,42,0.52);
+      backdrop-filter: blur(8px);
+    }
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .sticky-box { position: static; }
+      .bundle-grid,
+      .related-grid,
+      .review-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page-shell { padding-inline: 14px; }
+      .hero-main { min-height: 360px; border-radius: 24px; }
+      .detail-card { padding: 20px; border-radius: 24px; }
+      .grid-2,
+      .grid-3,
+      .btn-row { grid-template-columns: 1fr; }
+      .thumbs { grid-template-columns: repeat(2, 1fr); }
+      .price-new { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-shell" style="padding-bottom: 0;">
+    <div class="glass" style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 16px;border-radius:24px;">
+      <a href="index.html#shop" style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <div style="width:46px;height:46px;border-radius:999px;overflow:hidden;background:linear-gradient(135deg,#c96a5c,#e8a58f);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:0 14px 30px rgba(201,106,92,0.22);">
+          <img src="logo.jpeg" alt="Bloomelle logo" style="width:100%;height:100%;object-fit:cover;border-radius:999px;" />
+        </div>
+        <div style="min-width:0;">
+          <div style="font-weight:900;font-size:18px;line-height:1.1;">Bloomelle</div>
+          <div style="font-size:12px;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);font-weight:800;">Premium Detail</div>
+        </div>
+      </a>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;">
+        <button id="themeToggle" class="pill" style="width:44px;height:44px;border-radius:16px;display:grid;place-items:center;color:var(--text);cursor:pointer;" type="button" aria-label="Toggle theme"><i class="fa-solid fa-moon"></i></button>
+        <a class="btn-outline" href="index.html#shop" style="display:inline-flex;align-items:center;justify-content:center;min-height:44px;">Back to Shop</a>
+        <button id="openCartCheckoutBtn" class="btn-primary" type="button" style="min-height:44px;">Checkout Sekarang</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-media">
+        <div class="hero-main">
+          <div class="hero-badge" id="discountBadge">-0%</div>
+          <img id="productImage" alt="Product image" />
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <aside class="sticky-box">
+        <div class="detail-card">
+          <div class="section-title" id="productCategory">Product Spotlight</div>
+          <h1 id="productName" style="margin:0;font-size:40px;line-height:1.05;">Bloomelle Product</h1>
+          <div class="meta-row">
+            <span class="meta-chip" id="productRating"><i class="fa-solid fa-star"></i>0.0</span>
+            <span class="meta-chip" id="productSold">0 terjual</span>
+            <span class="meta-chip" id="productStock">Stok tersedia</span>
+          </div>
+
+          <div style="margin-top:18px;" class="price-row">
+            <span class="price-old" id="productOriginalPrice">Rp0</span>
+            <span class="price-new" id="productPrice">Rp0</span>
+          </div>
+
+          <div style="margin-top:18px;" class="section-copy" id="productDesc"></div>
+
+          <div style="margin-top:18px;" class="grid-2">
+            <div class="mini-card">
+              <div class="section-title" style="margin-bottom:8px;">Suitable For</div>
+              <ul id="suitableFor" class="list"></ul>
+            </div>
+            <div class="mini-card">
+              <div class="section-title" style="margin-bottom:8px;">Product Includes</div>
+              <ul id="productIncludes" class="list"></ul>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;" class="grid-3">
+            <div class="mini-card"><div class="section-title" style="margin-bottom:6px;">Discount</div><div style="font-size:26px;font-weight:900;color:var(--accent);" id="discountText">0%</div></div>
+            <div class="mini-card"><div class="section-title" style="margin-bottom:6px;">Rating</div><div style="font-size:26px;font-weight:900;color:var(--accent);" id="ratingText">0.0</div></div>
+            <div class="mini-card"><div class="section-title" style="margin-bottom:6px;">Sold</div><div style="font-size:26px;font-weight:900;color:var(--accent);" id="soldText">0</div></div>
+          </div>
+
+          <div style="margin-top:18px;" class="mini-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+              <div>
+                <div class="section-title" style="margin-bottom:6px;">Quantity</div>
+                <div style="color:var(--muted);font-weight:700;">Tambah jumlah sebelum checkout</div>
+              </div>
+              <div class="qty-box">
+                <button id="qtyMinus" type="button" aria-label="Kurangi">−</button>
+                <span id="qtyValue">1</span>
+                <button id="qtyPlus" type="button" aria-label="Tambah">+</button>
+              </div>
+            </div>
+            <div class="btn-row" style="margin-top:16px;">
+              <button id="wishlistBtn" class="btn-secondary" type="button"><i class="fa-regular fa-heart"></i> Wishlist</button>
+              <button id="quickViewBtn" class="btn-outline" type="button"><i class="fa-solid fa-expand"></i> Quick View</button>
+            </div>
+            <div class="btn-row" style="margin-top:12px;">
+              <button id="addToCartBtn" class="btn-primary" type="button"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+              <button id="buyNowBtn" class="btn-secondary" type="button">Buy Now</button>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;" class="mini-card">
+            <div class="section-title" style="margin-bottom:8px;">Stock Indicator</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:800;">
+              <span id="stockStatusLabel">Ready to ship</span><span id="stockLabel">24 pcs</span>
+            </div>
+            <div class="stock-bar"><span id="stockBar" style="width:72%;"></span></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section style="margin-top:24px;" class="detail-card">
+      <div class="section-title">Flash Sale Countdown</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0 0 6px;font-size:28px;">Promo Bloomelle hari ini</h2>
+          <p class="section-copy">Harga promo dan bundle berubah ketika countdown habis. Jadikan ini dorongan pembelian yang jelas dan terasa marketplace premium.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;" id="countdown"></div>
+      </div>
+    </section>
+
+    <section style="margin-top:24px;" class="detail-card">
+      <div class="section-title">Bundle Deals</div>
+      <h2 style="margin:0 0 18px;font-size:28px;">Paket hemat yang paling sering dipilih</h2>
+      <div class="bundle-grid" id="bundleGrid"></div>
+    </section>
+
+    <section style="margin-top:24px;" class="detail-card">
+      <div class="section-title">Customer Reviews</div>
+      <h2 style="margin:0 0 18px;font-size:28px;">Review premium dari pembeli</h2>
+      <div class="review-grid" id="reviewGrid"></div>
+    </section>
+
+    <section style="margin-top:24px;" class="detail-card">
+      <div class="section-title">Related Products</div>
+      <h2 style="margin:0 0 18px;font-size:28px;">Produk lain yang cocok dibeli bersamaan</h2>
+      <div class="related-grid" id="relatedGrid"></div>
+    </section>
+  </main>
+
+  <a class="floating-wa" href="https://wa.me/6287880614329?text=Halo%20Bloomelle%2C%20saya%20mau%20order%20produk%20ini." target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-whatsapp"></i><span>Order WhatsApp</span>
+  </a>
+
+  <div id="toast" class="toast glass" style="padding:12px 16px;border-radius:18px;font-weight:900;">Bloomelle</div>
+
+  <section id="quickModal" class="quick-modal" aria-hidden="true">
+    <div class="backdrop" data-close-modal></div>
+    <div class="glass">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+        <img id="quickImage" alt="Quick view image" style="width:100%;height:100%;object-fit:cover;min-height:320px;" />
+        <div style="padding:24px;">
+          <div class="section-title">Quick View</div>
+          <h3 id="quickName" style="margin:0;font-size:32px;"></h3>
+          <p id="quickCopy" class="section-copy" style="margin-top:12px;"></p>
+          <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;" id="quickBadges"></div>
+          <div style="margin-top:22px;" class="btn-row">
+            <button id="quickAddBtn" class="btn-primary" type="button">Add to Cart</button>
+            <button class="btn-secondary" type="button" data-close-modal>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const PRODUCTS = [
+        {
+          id: 1,
+          name: 'Vas Mini Bloomelle',
+          category: 'Dekorasi Meja Estetik',
+          originalPrice: 49000,
+          price: 33000,
+          rating: 4.9,
+          sold: 14,
+          stock: 5,
+          desc: 'Decorasi meja estetik yang menghadirkan sentuhan hangat dan elegan di setiap sudut ruangan.',
+          detail: 'Vas Mini Bloomelle merupakan rangkaian bunga handmade premium yang dibuat secara detail menggunakan kawat bulu berkualitas tinggi. Setiap bunga dirangkai secara manual sehingga menghasilkan tampilan yang unik dan berkarakter. Dilengkapi dengan vas mini dekoratif, batu hias, serta kemasan eksklusif yang siap dijadikan hadiah tanpa perlu repot membungkus ulang.',
+          badges: ['Discount', 'Handmade', 'Gift Ready'],
+          suitableFor: ['Dekorasi meja belajar', 'Meja kerja kantor', 'Kado sahabat', 'Hadiah pasangan'],
+          includes: ['3–5 tangkai bunga handmade premium', 'Vas mini dekoratif', 'Batu hias estetik', 'Gift box transparan eksklusif'],
+          images: [
+            'vas bunga 1-3.jpg',
+            'vas bunga 1-4.jpg',
+            'vas bunga 1-5.jpg'
+          ]
+        },
+        {
+          id: 2,
+          name: 'Bloomelle Medium Bouquet',
+          category: 'Bouquet Premium',
+          originalPrice: 79000,
+          price: 58000,
+          rating: 5.0,
+          sold: 13,
+          stock: 6,
+          desc: 'Buket bunga handmade premium dengan tampilan mewah ala Korean Bouquet yang sedang tren.',
+          detail: 'Dirancang untuk memberikan kesan spesial pada setiap momen, Bloomelle Medium Bouquet menghadirkan kombinasi bunga handmade yang tahan lama tanpa perlu perawatan. Dibungkus menggunakan wrapping premium berlapis dan pita satin elegan sehingga terlihat eksklusif dan berkelas.',
+          badges: ['Best Seller', 'Premium Wrap', 'Free Card'],
+          suitableFor: ['Hadiah ulang tahun', 'Anniversary', 'Ucapan terima kasih', 'Lamaran sederhana'],
+          includes: ['Handmade bouquet premium', 'Wrapping Korea berlapis', 'Pita satin elegan', 'Free kartu ucapan personal'],
+          images: [
+            'buket 1-2.jpg',
+            'buket 1-3.jpg',
+            'buket 1-4.png'
+          ]
+        },
+        {
+          id: 3,
+          name: 'Bloomelle Keychain',
+          category: 'Aksesori Lucu',
+          originalPrice: 19000,
+          price: 15000,
+          rating: 4.8,
+          sold: 12,
+          stock: 8,
+          desc: 'Aksesori mungil yang lucu, estetik, dan penuh makna.',
+          detail: 'Bloomelle Keychain dibuat secara handmade dengan desain bunga yang menggemaskan sehingga cocok digunakan sebagai gantungan kunci, gantungan tas, maupun souvenir spesial.',
+          badges: ['Cute Accessory', 'Handmade', 'Souvenir'],
+          suitableFor: ['Gantungan tas', 'Gantungan kunci', 'Souvenir acara', 'Hadiah kecil'],
+          includes: ['1 keychain bunga handmade', 'Ring besi premium anti karat', 'Packaging aesthetic'],
+          images: [
+            'ganci 1-4.jpg',
+            'ganci 1-5.jpg',
+            'ganci 1-6.png'
+          ]
+        },
+        {
+          id: 4,
+          name: 'Bloomelle Brooch',
+          category: 'Aksesori Fashion',
+          originalPrice: 21000,
+          price: 17000,
+          rating: 4.9,
+          sold: 11,
+          stock: 9,
+          desc: 'Bros bunga handmade yang memberikan sentuhan manis pada setiap penampilan.',
+          detail: 'Didesain dengan detail yang rapi dan elegan, cocok digunakan pada hijab, blazer, kemeja, maupun tote bag favorit.',
+          badges: ['Elegant', 'Hijab Friendly', 'Gift Ready'],
+          suitableFor: ['Hijab', 'Blazer', 'Kemeja', 'Tote bag'],
+          includes: ['1 brooch handmade', 'Peniti premium', 'Gift-ready packaging'],
+          images: [
+            'bros 1-4.jpg',
+            'bros 1-3.jpg',
+            'bros 1-5.jpg'
+          ]
+        },
+        {
+          id: 5,
+          name: 'Bloomelle Hair Clip',
+          category: 'Aksesori Rambut',
+          originalPrice: 22000,
+          price: 18000,
+          rating: 4.8,
+          sold: 10,
+          stock: 10,
+          desc: 'Jepit rambut estetik yang membuat penampilan semakin manis dan menawan.',
+          detail: 'Hadir dengan desain bunga handmade yang unik dan feminin. Cocok digunakan untuk aktivitas sehari-hari maupun acara spesial.',
+          badges: ['Stylish', 'Lightweight', 'Everyday Use'],
+          suitableFor: ['Aktivitas harian', 'Acara spesial', 'Hadiah teman', 'Foto OOTD'],
+          includes: ['1 hair clip handmade', 'Material ringan', 'Packaging aesthetic'],
+          images: [
+            'aksesori 1-5.jpg',
+            'aksesori 1-3.png',
+            'aksesori 1-4.png'
+          ]
+        }
+      ];
+
+      const BUNDLES = [
+        { id: 'bundle-1', badge: 'BEST VALUE', name: 'Paket Meja Estetik', includes: ['Vas Mini Bloomelle', 'Bloomelle Keychain', 'Bloomelle Brooch'], normalPrice: 65000, price: 60000, save: 5000 },
+        { id: 'bundle-2', badge: 'MOST POPULAR', name: 'Paket Gift Special', includes: ['Bloomelle Medium Bouquet', 'Bloomelle Keychain'], normalPrice: 73000, price: 68000, save: 5000 },
+        { id: 'bundle-3', badge: 'SUPER SAVER', name: 'Paket Premium Bloom', includes: ['Bloomelle Medium Bouquet', 'Vas Mini Bloomelle', 'Bloomelle Keychain'], normalPrice: 106000, price: 95000, save: 11000 }
+      ];
+
+      const STOCK_STORAGE_KEY = 'bloomelle-product-stock';
+      const STOCK_SIGNATURE_KEY = 'bloomelle-product-stock-signature';
+      function defaultStockSignature() {
+        return PRODUCTS.map(product => `${product.id}:${product.stock}`).join('|');
+      }
+
+      function loadStockState() {
+        try {
+          const raw = localStorage.getItem(STOCK_STORAGE_KEY);
+          const storedSignature = localStorage.getItem(STOCK_SIGNATURE_KEY);
+          if (!raw || storedSignature !== defaultStockSignature()) {
+            localStorage.removeItem(STOCK_STORAGE_KEY);
+            localStorage.setItem(STOCK_SIGNATURE_KEY, defaultStockSignature());
+            return {};
+          }
+          return JSON.parse(raw);
+        } catch {
+          return {};
+        }
+      }
+
+      function saveStockState() {
+        const stockData = PRODUCTS.reduce((acc, product) => {
+          acc[product.id] = product.stock;
+          return acc;
+        }, {});
+        localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(stockData));
+        localStorage.setItem(STOCK_SIGNATURE_KEY, defaultStockSignature());
+      }
+
+      function applyStoredStock() {
+        const stored = loadStockState();
+        PRODUCTS.forEach(product => {
+          if (typeof stored[product.id] === 'number') {
+            product.stock = stored[product.id];
+          }
+        });
+      }
+
+      applyStoredStock();
+
+      const FALLBACK_ID = 1;
+      const auth = window.BloomelleAuth.requireAuth();
+      if (!auth) return;
+
+      const params = new URLSearchParams(window.location.search);
+      const storedSelected = readJson(localStorage.getItem('bloomelle-selected-product'));
+      const directCheckout = readJson(localStorage.getItem('bloomelle-direct-checkout'));
+      const initialId = Number(params.get('id') || storedSelected?.id || directCheckout?.productId || FALLBACK_ID);
+      let activeProductId = PRODUCTS.some(item => item.id === initialId) ? initialId : FALLBACK_ID;
+      let quantity = 1;
+      let currentThumb = 0;
+      let countdownSeconds = 8 * 60 + 42;
+
+      const el = {
+        themeToggle: document.getElementById('themeToggle'),
+        openCartCheckoutBtn: document.getElementById('openCartCheckoutBtn'),
+        productImage: document.getElementById('productImage'),
+        thumbs: document.getElementById('thumbs'),
+        discountBadge: document.getElementById('discountBadge'),
+        productCategory: document.getElementById('productCategory'),
+        productName: document.getElementById('productName'),
+        productRating: document.getElementById('productRating'),
+        productSold: document.getElementById('productSold'),
+        productStock: document.getElementById('productStock'),
+        stockStatusLabel: document.getElementById('stockStatusLabel'),
+        productOriginalPrice: document.getElementById('productOriginalPrice'),
+        productPrice: document.getElementById('productPrice'),
+        productDesc: document.getElementById('productDesc'),
+        suitableFor: document.getElementById('suitableFor'),
+        productIncludes: document.getElementById('productIncludes'),
+        discountText: document.getElementById('discountText'),
+        ratingText: document.getElementById('ratingText'),
+        soldText: document.getElementById('soldText'),
+        stockLabel: document.getElementById('stockLabel'),
+        stockBar: document.getElementById('stockBar'),
+        qtyMinus: document.getElementById('qtyMinus'),
+        qtyPlus: document.getElementById('qtyPlus'),
+        qtyValue: document.getElementById('qtyValue'),
+        wishlistBtn: document.getElementById('wishlistBtn'),
+        quickViewBtn: document.getElementById('quickViewBtn'),
+        addToCartBtn: document.getElementById('addToCartBtn'),
+        buyNowBtn: document.getElementById('buyNowBtn'),
+        countdown: document.getElementById('countdown'),
+        bundleGrid: document.getElementById('bundleGrid'),
+        reviewGrid: document.getElementById('reviewGrid'),
+        relatedGrid: document.getElementById('relatedGrid'),
+        toast: document.getElementById('toast'),
+        quickModal: document.getElementById('quickModal'),
+        quickImage: document.getElementById('quickImage'),
+        quickName: document.getElementById('quickName'),
+        quickCopy: document.getElementById('quickCopy'),
+        quickBadges: document.getElementById('quickBadges'),
+        quickAddBtn: document.getElementById('quickAddBtn')
+      };
+
+      function readJson(raw) {
+        try { return raw ? JSON.parse(raw) : null; } catch { return null; }
+      }
+
+      function money(value) {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Math.max(0, Math.round(value)));
+      }
+
+      function currentProduct() {
+        return PRODUCTS.find(item => item.id === activeProductId) || PRODUCTS[0];
+      }
+
+      function showToast(message) {
+        el.toast.textContent = message;
+        el.toast.classList.add('show');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => el.toast.classList.remove('show'), 1700);
+      }
+
+      function setTheme(theme) {
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        el.themeToggle.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
+        localStorage.setItem('bloomelle-theme', theme);
+      }
+
+      function setThemeFromStorage() {
+        const saved = localStorage.getItem('bloomelle-theme');
+        if (saved === 'dark' || saved === 'light') {
+          setTheme(saved);
+        } else {
+          setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        }
+      }
+
+      function renderThumbs(product) {
+        el.thumbs.innerHTML = product.images.map((src, index) => `
+          <button class="thumb ${index === currentThumb ? 'active' : ''}" type="button" data-thumb="${index}">
+            <img src="${src}" alt="Thumbnail ${index + 1} ${product.name}" />
+          </button>
+        `).join('');
+        el.thumbs.querySelectorAll('[data-thumb]').forEach(button => {
+          button.addEventListener('click', () => {
+            currentThumb = Number(button.dataset.thumb) || 0;
+            renderProduct();
+          });
+        });
+      }
+
+      function renderReviews(product) {
+        const reviews = [
+          { name: 'Nisa, Jakarta', photo: 'NS', text: 'Packing rapi, produk cantik, dan terasa premium saat diterima.' },
+          { name: 'Rani, Bandung', photo: 'RM', text: 'Detail handmade-nya halus. Cocok untuk hadiah yang terlihat mahal.' },
+          { name: 'Mira, Surabaya', photo: 'MR', text: 'Discount dan bundle-nya jelas. Halamannya terasa seperti marketplace besar.' }
+        ];
+        el.reviewGrid.innerHTML = reviews.map(review => `
+          <article class="review-card">
+            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <p style="margin:14px 0 12px;color:var(--muted);line-height:1.85;">“${review.text}”</p>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#c96a5c,#e8a58f);color:#fff;font-weight:900;">${review.photo}</div>
+              <div>
+                <div style="font-weight:900;">${review.name}</div>
+                <div style="font-size:13px;color:var(--muted);">Customer verified</div>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      function renderBundles(product) {
+        const relatedBundles = BUNDLES.map(bundle => `
+          <article class="mini-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+              <div style="font-size:12px;letter-spacing:0.25em;text-transform:uppercase;font-weight:900;color:var(--accent);">${bundle.badge}</div>
+              <div style="font-size:12px;font-weight:900;color:var(--accent);">Hemat ${money(bundle.save)}</div>
+            </div>
+            <h3 style="margin:12px 0 10px;font-size:22px;">${bundle.name}</h3>
+            <ul class="list" style="${bundle.id === 'bundle-2' ? 'min-height: 88px;' : ''}">${bundle.includes.map(item => `<li>${item}</li>`).join('')}</ul>
+            <div class="bundle-footer">
+              <div class="bundle-price">
+                <div class="price-old">${money(bundle.normalPrice)}</div>
+                <div style="font-size:24px;font-weight:900;color:var(--accent);">${money(bundle.price)}</div>
+              </div>
+              <button class="btn-primary" type="button" data-bundle-buy="${bundle.id}" style="min-height:46px;padding-inline:14px;">Tambah</button>
+            </div>
+          </article>
+        `).join('');
+        el.bundleGrid.innerHTML = relatedBundles;
+        el.bundleGrid.querySelectorAll('[data-bundle-buy]').forEach(button => {
+          button.addEventListener('click', () => {
+            const bundle = BUNDLES.find(item => item.id === button.dataset.bundleBuy);
+            if (!bundle) return;
+            const selectedImage = product.images[currentThumb];
+            localStorage.setItem('bloomelle-direct-checkout', JSON.stringify({ bundleId: bundle.id, bundleName: bundle.name, bundlePrice: bundle.price, bundleImage: selectedImage, productId: product.id, image: selectedImage, quantity }));
+            window.location.href = `checkout.html?bundle=${bundle.id}`;
+          });
+        });
+      }
+
+      function renderRelated(product) {
+        const items = PRODUCTS.filter(item => item.id !== product.id).slice(0, 3);
+        el.relatedGrid.innerHTML = items.map(item => {
+          const discount = Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100);
+          return `
+            <article class="mini-card">
+              <img src="${item.images[0]}" alt="${item.name}" style="width:100%;height:180px;object-fit:cover;border-radius:18px;" />
+              <div style="margin-top:14px;font-size:12px;letter-spacing:0.28em;text-transform:uppercase;font-weight:900;color:var(--accent);">${item.category}</div>
+              <h3 style="margin:10px 0 8px;font-size:20px;">${item.name}</h3>
+              <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+                <span class="price-old">${money(item.originalPrice)}</span>
+                <strong style="font-size:20px;color:var(--accent);">${money(item.price)}</strong>
+                <span class="meta-chip">-${discount}%</span>
+              </div>
+              <button class="btn-outline" type="button" data-open-product="${item.id}" style="width:100%;min-height:46px;">Lihat Detail</button>
+            </article>
+          `;
+        }).join('');
+        el.relatedGrid.querySelectorAll('[data-open-product]').forEach(button => {
+          button.addEventListener('click', () => {
+            window.location.href = `catalog-detail.html?id=${button.dataset.openProduct}`;
+          });
+        });
+      }
+
+      function renderCountdown() {
+        const seconds = countdownSeconds;
+        const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        const parts = [
+          { label: 'Hours', value: h },
+          { label: 'Mins', value: m },
+          { label: 'Secs', value: s }
+        ];
+        el.countdown.innerHTML = parts.map(part => `
+          <div class="mini-card" style="min-width:92px;text-align:center;">
+            <div style="font-size:28px;font-weight:900;color:var(--accent);line-height:1;">${part.value}</div>
+            <div style="margin-top:6px;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);font-weight:900;">${part.label}</div>
+          </div>
+        `).join('');
+      }
+
+      function renderProduct() {
+        const product = currentProduct();
+        const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+        el.productImage.src = product.images[currentThumb];
+        el.productCategory.textContent = product.category;
+        el.productName.textContent = product.name;
+        el.productRating.innerHTML = `<i class="fa-solid fa-star"></i> ${product.rating.toFixed(1)} / 5.0`;
+        el.productSold.textContent = `${product.sold} terjual`;
+        el.productStock.textContent = product.stock > 20 ? 'Ready stock' : 'Limited stock';
+        el.stockStatusLabel.textContent = product.stock > 20 ? 'Ready to ship' : 'Limited stock';
+        el.productOriginalPrice.textContent = money(product.originalPrice);
+        el.productPrice.textContent = money(product.price);
+        el.productDesc.textContent = product.detail;
+        el.discountBadge.textContent = `-${discount}%`;
+        el.discountText.textContent = `-${discount}%`;
+        el.ratingText.textContent = product.rating.toFixed(1);
+        el.soldText.textContent = `${product.sold}+`;
+        el.stockLabel.textContent = `${product.stock} pcs`;
+        el.stockBar.style.width = `${Math.max(32, Math.min(92, product.stock * 3))}%`;
+        el.qtyValue.textContent = String(quantity);
+        el.suitableFor.innerHTML = product.suitableFor.map(item => `<li>${item}</li>`).join('');
+        el.productIncludes.innerHTML = product.includes.map(item => `<li>${item}</li>`).join('');
+        renderThumbs(product);
+        renderBundles(product);
+        renderReviews(product);
+        renderRelated(product);
+        renderCountdown();
+        el.quickImage.src = product.images[currentThumb];
+        el.quickName.textContent = product.name;
+        el.quickCopy.textContent = product.detail;
+        el.quickBadges.innerHTML = product.badges.map(badge => `<span class="meta-chip">${badge}</span>`).join('');
+      }
+
+      function decreaseStock(amount) {
+        const product = currentProduct();
+        if (amount <= 0 || product.stock <= 0) return;
+        product.stock = Math.max(0, product.stock - amount);
+        saveStockState();
+        renderProduct();
+      }
+
+      function setCheckoutDraft(source) {
+        const product = currentProduct();
+        localStorage.setItem('bloomelle-direct-checkout', JSON.stringify({ productId: product.id, image: product.images[currentThumb], quantity, source }));
+      }
+
+      function addToCart() {
+        const product = currentProduct();
+        if (quantity > product.stock) {
+          showToast('Stok tidak cukup untuk jumlah yang dipilih');
+          return;
+        }
+
+        const cart = readJson(localStorage.getItem('bloomelle-cart')) || [];
+        const existing = cart.find(item => Number(item.product?.id) === product.id);
+        if (existing) {
+          existing.quantity = (Number(existing.quantity) || 1) + quantity;
+        } else {
+          cart.push({ product: { id: product.id, name: product.name, category: product.category, price: product.price, image: product.images[currentThumb] }, quantity });
+        }
+        localStorage.setItem('bloomelle-cart', JSON.stringify(cart));
+        decreaseStock(quantity);
+        setCheckoutDraft('cart');
+        showToast('Produk ditambahkan ke keranjang');
+      }
+
+      function openQuickView() {
+        el.quickModal.classList.add('open');
+        el.quickModal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeQuickView() {
+        el.quickModal.classList.remove('open');
+        el.quickModal.setAttribute('aria-hidden', 'true');
+      }
+
+      function buyNow() {
+        const product = currentProduct();
+        if (quantity > product.stock) {
+          showToast('Stok tidak cukup untuk jumlah yang dipilih');
+          return;
+        }
+        decreaseStock(quantity);
+        setCheckoutDraft('buy-now');
+        window.location.href = `checkout.html?productId=${product.id}`;
+      }
+
+      el.themeToggle.addEventListener('click', () => {
+        setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+      });
+
+      el.qtyMinus.addEventListener('click', () => {
+        quantity = Math.max(1, quantity - 1);
+        renderProduct();
+      });
+      el.qtyPlus.addEventListener('click', () => {
+        quantity += 1;
+        renderProduct();
+      });
+      el.addToCartBtn.addEventListener('click', addToCart);
+      el.buyNowBtn.addEventListener('click', buyNow);
+      el.quickViewBtn.addEventListener('click', openQuickView);
+      el.wishlistBtn.addEventListener('click', () => showToast('Ditambahkan ke wishlist')); 
+      el.quickAddBtn.addEventListener('click', () => { addToCart(); closeQuickView(); });
+      el.openCartCheckoutBtn.addEventListener('click', buyNow);
+      document.querySelectorAll('[data-close-modal]').forEach(node => node.addEventListener('click', closeQuickView));
+
+      window.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeQuickView();
+      });
+
+      if (directCheckout?.quantity) {
+        quantity = Math.max(1, Number(directCheckout.quantity) || 1);
+      }
+
+      setThemeFromStorage();
+      renderProduct();
+      renderCountdown();
+      setInterval(() => {
+        countdownSeconds = countdownSeconds <= 0 ? 8 * 60 + 42 : countdownSeconds - 1;
+        renderCountdown();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

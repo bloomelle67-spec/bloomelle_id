@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomelle | Checkout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="checkout.css?v=3" />
+</head>
+<body>
+  <header class="checkout-header">
+    <a class="back-button" href="index.html" aria-label="Kembali"><i class="fa-solid fa-chevron-left"></i></a>
+    <div class="header-copy">
+      <p>Bloomelle Checkout</p>
+      <h1>Lengkapi pesanan Anda</h1>
+    </div>
+    <span class="header-spacer" aria-hidden="true"></span>
+  </header>
+
+  <main class="page-shell">
+    <section class="checkout-layout" id="checkoutMain">
+      <section class="checkout-column" id="checkoutSection">
+        <article class="card address-card">
+          <div class="card-title-row">
+            <div>
+              <p class="card-kicker"><i class="fa-solid fa-location-dot"></i> Alamat Pengiriman</p>
+              <h2 id="addressTitle">Belum ada alamat tersimpan</h2>
+            </div>
+            <div class="address-actions">
+              <button id="editAddressBtn" class="text-button" type="button">Edit Alamat</button>
+            </div>
+          </div>
+          <div class="address-body">
+            <div class="address-meta">
+              <span id="addressBadge" class="badge">Alamat Utama</span>
+              <span id="addressPhone">Lengkapi nomor handphone</span>
+            </div>
+            <p id="addressText" class="address-text">Simpan alamat pengiriman agar checkout bisa dilanjutkan.</p>
+            <p id="addressRegion" class="address-region"></p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="card-kicker">Pesanan Anda</p>
+              <h2>Produk yang dibeli</h2>
+            </div>
+          </div>
+          <div id="cartItems" class="cart-list"></div>
+          <label class="field-group note-group">
+            <span>Catatan untuk penjual</span>
+            <textarea id="sellerNote" rows="3" placeholder="Contoh: mohon bungkus rapi dan sertakan kartu ucapan."></textarea>
+          </label>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="card-kicker">Metode Pengiriman</p>
+              <h2>Pilih layanan pengiriman</h2>
+            </div>
+          </div>
+          <div class="radio-list" id="shippingOptions"></div>
+          <p id="shipError" class="field-error hidden"></p>
+          <label class="checkbox-row"><input id="giftWrap" type="checkbox" /><span>Kirim sebagai hadiah</span></label>
+          <label id="giftMessageWrap" class="field-group hidden"><span>Pesan untuk penerima</span><textarea id="giftMessage" rows="3" placeholder="Pesan untuk penerima"></textarea></label>
+        </article>
+
+        <article class="card">
+          <div class="section-head split">
+            <div>
+              <p class="card-kicker">Voucher</p>
+              <h2>Gunakan voucher</h2>
+            </div>
+            <button id="openVoucherBtn" class="primary-outline" type="button">Pilih Voucher</button>
+          </div>
+          <div class="voucher-summary"><span id="selectedVoucherLabel">Belum ada voucher dipilih</span></div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="card-kicker">Metode Pembayaran</p>
+              <h2>Pilih pembayaran</h2>
+            </div>
+          </div>
+          <div class="payment-summary-chip"><span>Metode Pembayaran :</span><strong id="paymentSummaryValue">GoPay</strong></div>
+          <div class="payment-grid" id="paymentOptions"></div>
+        </article>
+
+        <article class="card">
+          <div class="section-head">
+            <div>
+              <p class="card-kicker">Rincian Pembayaran</p>
+              <h2>Ringkasan biaya</h2>
+            </div>
+          </div>
+          <div class="summary-list">
+            <div class="summary-row"><span>Subtotal Produk</span><strong id="subtotalProducts">Rp 0</strong></div>
+            <div class="summary-row"><span>Subtotal Pengiriman</span><strong id="subtotalShipping">Rp 0</strong></div>
+            <div class="summary-row"><span>Diskon Voucher</span><strong id="voucherDiscount">- Rp 0</strong></div>
+            <div class="summary-row"><span>Biaya Admin</span><strong id="serviceFee">Rp 1.000</strong></div>
+            <div class="summary-row"><span>Donasi</span><strong id="donationValue">Rp 0</strong></div>
+            <div class="summary-divider"></div>
+            <div class="summary-row total-row"><span>Total Pembayaran</span><strong id="grandTotal">Rp 0</strong></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <label class="checkbox-row"><input id="donateCheckbox" type="checkbox" /><span>Donasikan Rp2.000 untuk pelestarian bunga lokal Indonesia.</span></label>
+        </article>
+
+        <article class="card">
+          <label class="field-group"><span>Catatan Pesanan</span><textarea id="orderNote" rows="4" placeholder="Tambahkan catatan khusus untuk pesanan Anda..."></textarea></label>
+        </article>
+      </section>
+
+      <aside id="checkoutAside" class="checkout-summary card">
+        <div class="section-head">
+          <div>
+            <p class="card-kicker">Ringkasan</p>
+            <h2>Pesanan Bloomelle</h2>
+          </div>
+        </div>
+        <div class="summary-compact">
+          <div><span>Produk</span><strong id="summaryProductCount">3 item</strong></div>
+          <div><span>Pengiriman</span><strong id="summaryShipping">Reguler</strong></div>
+          <div><span>Pembayaran</span><strong id="summaryPayment">GoPay</strong></div>
+        </div>
+        <div class="mini-highlight"><span>Total Saat Ini</span><strong id="sidebarTotal">Rp 0</strong></div>
+        <p class="sidebar-note">Bloomelle memproses pesanan handmade Anda dengan kemasan yang rapi dan aman.</p>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="sticky-footer">
+    <div><span>Total Pembayaran</span><strong id="footerTotal">Rp 0</strong></div>
+    <button id="createOrderBtn" type="button" disabled>Buat Pesanan</button>
+  </footer>
+
+  <section id="confirmationModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-confirmation></div>
+    <div class="modal-card">
+      <h3>Konfirmasi Pesanan</h3>
+      <div class="confirmation-box">
+        <div><span>Alamat :</span><strong id="confirmAddress">-</strong></div>
+        <div><span>Metode Pembayaran :</span><strong id="confirmPayment">-</strong></div>
+        <div><span>Total :</span><strong id="confirmTotal">Rp 0</strong></div>
+      </div>
+      <div class="modal-actions">
+        <button id="cancelOrderBtn" class="secondary-btn" type="button">Batal</button>
+        <button id="continueOrderBtn" class="primary-btn" type="button">Buat Pesanan</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="voucherModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-voucher></div>
+    <div class="modal-card voucher-card">
+      <h3>Pilih Voucher</h3>
+      <div class="voucher-options" id="voucherOptions"></div>
+      <div class="modal-actions"><button id="closeVoucherBtn" class="secondary-btn" type="button">Tutup</button></div>
+    </div>
+  </section>
+
+  <section id="addressModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-address></div>
+    <div class="modal-card address-modal-card">
+      <h3 id="addressModalTitle">Tambah Alamat</h3>
+      <p class="modal-subtitle" id="addressModalSubtitle">Lengkapi alamat pengiriman agar pesanan bisa diproses.</p>
+      <div class="address-form-grid">
+        <label class="field-group"><span>Nama Penerima</span><input id="recipientNameInput" type="text" placeholder="Nama lengkap" /></label>
+        <label class="field-group"><span>Nomor Handphone</span><input id="phoneInput" type="text" placeholder="0812xxxxxxx" /></label>
+        <label class="field-group"><span>Provinsi</span><input id="provinceInput" type="text" placeholder="Lampung" /></label>
+        <label class="field-group"><span>Kota/Kabupaten</span><input id="cityInput" type="text" placeholder="Bandar Lampung" /></label>
+        <label class="field-group"><span>Kecamatan</span><input id="districtInput" type="text" placeholder="Tanjung Karang Pusat" /></label>
+        <label class="field-group"><span>Kelurahan</span><input id="subdistrictInput" type="text" placeholder="Kebon Jeruk" /></label>
+        <label class="field-group"><span>Kode Pos</span><input id="postalCodeInput" type="text" placeholder="35111" /></label>
+        <label class="field-group field-span-2"><span>Detail Alamat</span><textarea id="detailAddressInput" rows="4" placeholder="Nama jalan, nomor rumah, patokan, dll."></textarea></label>
+        <label class="field-group"><span>Label Alamat</span>
+          <select id="addressLabelSelect">
+            <option value="Rumah">Rumah</option>
+            <option value="Kantor">Kantor</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
+        </label>
+        <label class="checkbox-row field-span-2"><input id="primaryAddressInput" type="checkbox" checked /><span>Jadikan alamat utama</span></label>
+      </div>
+      <div class="modal-actions">
+        <button id="cancelAddressBtn" class="secondary-btn" type="button">Batal</button>
+        <button id="saveAddressBtn" class="primary-btn" type="button">Simpan Alamat</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast">Bloomelle</div>
+
+  <script src="auth.js"></script>
+  <script src="checkout.js?v=4"></script>
+</body>
+</html>

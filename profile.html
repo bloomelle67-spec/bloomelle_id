@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomelle | Ubah Profil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="profile.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="back-btn" href="index.html" aria-label="Kembali ke beranda">
+        <i class="fa-solid fa-chevron-left"></i>
+      </a>
+      <div class="topbar-title">
+        <h1>Ubah Profil</h1>
+        <p>Atur data akun Anda dengan benar.</p>
+      </div>
+      <a class="mini-link" href="index.html#shop">Shop</a>
+    </header>
+
+    <main class="content">
+      <section class="profile-hero card">
+        <div class="avatar-panel">
+          <button id="avatarButton" class="avatar-wrap" type="button" aria-label="Ubah foto profil">
+            <img id="avatarPreview" src="https://ui-avatars.com/api/?name=Bloomelle&background=ee4d2d&color=fff&size=256&bold=true" alt="Avatar profil" />
+            <span class="avatar-edit"><i class="fa-solid fa-pen"></i></span>
+          </button>
+          <input id="avatarInput" type="file" accept="image/*" hidden />
+          <p class="avatar-hint">Ketuk avatar untuk memilih gambar dari galeri.</p>
+        </div>
+
+        <div class="hero-copy">
+          <span class="section-kicker">Informasi Utama</span>
+          <h2 id="profileHeaderName">Bloomelle User</h2>
+          <p class="muted">Pastikan informasi akun Anda selalu akurat dan terkini.</p>
+        </div>
+      </section>
+
+      <section class="card form-card">
+        <div class="section-head">
+          <span class="section-kicker">Data Profil</span>
+          <h3>Lengkapi informasi dasar</h3>
+        </div>
+
+        <div class="field-group">
+          <label for="nameInput">Nama</label>
+          <input id="nameInput" type="text" placeholder="Masukkan nama Anda" autocomplete="name" />
+        </div>
+
+        <div class="field-group bio-field">
+          <div class="field-label-row">
+            <label for="bioInput">Bio</label>
+            <span id="bioCount" class="count">0/150</span>
+          </div>
+          <textarea id="bioInput" rows="4" maxlength="150" placeholder="Tulis bio singkat..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label>Jenis Kelamin</label>
+          <button id="genderButton" class="select-btn" type="button">
+            <span id="genderValue">Pilih jenis kelamin</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+        </div>
+
+        <div class="field-group">
+          <label for="birthdayInput">Tanggal Lahir</label>
+          <input id="birthdayInput" type="date" />
+          <small class="helper">Format tanggal mengikuti Indonesia.</small>
+        </div>
+
+        <div class="field-group">
+          <label for="phoneInput">Nomor Handphone</label>
+          <input id="phoneInput" type="tel" inputmode="numeric" maxlength="13" placeholder="08xxxxxxxxxx" />
+          <small class="helper">Hanya angka yang diperbolehkan.</small>
+        </div>
+
+        <div class="field-group email-row">
+          <div>
+            <label>Email</label>
+            <div class="email-value" id="maskedEmail">p***********3@gmail.com</div>
+          </div>
+          <span id="verificationBadge" class="verify-badge">✓ Terverifikasi</span>
+        </div>
+
+        <button id="saveButton" class="save-btn" type="button">Simpan Perubahan</button>
+      </section>
+
+      <section class="card orders-card">
+        <div class="section-head orders-head">
+          <div>
+            <span class="section-kicker">Pesanan Saya</span>
+            <h3>Daftar pesanan terbaru</h3>
+          </div>
+          <span class="orders-badge" id="ordersCount">0 pesanan</span>
+        </div>
+
+        <div id="ordersList" class="orders-list"></div>
+        <p id="ordersEmpty" class="orders-empty">Belum ada pesanan yang dibuat.</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="genderBackdrop" class="backdrop" hidden></div>
+  <section id="genderSheet" class="sheet" aria-hidden="true" aria-labelledby="genderSheetTitle">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <h3 id="genderSheetTitle">Jenis Kelamin</h3>
+      <button id="sheetCloseButton" class="sheet-close" type="button" aria-label="Tutup">Batal</button>
+    </div>
+    <div class="sheet-options">
+      <button class="sheet-option" type="button" data-gender="Pria">Pria</button>
+      <button class="sheet-option" type="button" data-gender="Perempuan">Perempuan</button>
+      <button class="sheet-option" type="button" data-gender="Lainnya">Lainnya</button>
+    </div>
+    <button id="sheetConfirmButton" class="sheet-confirm" type="button">Konfirmasi</button>
+  </section>
+
+  <script src="auth.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

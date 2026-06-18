@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomelle | Invoice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="invoice.css?v=1" />
+</head>
+<body>
+  <header class="invoice-header">
+    <a class="back-button" href="checkout.html" aria-label="Kembali ke checkout"><i class="fa-solid fa-chevron-left"></i></a>
+    <div class="header-copy">
+      <p>BLOOMELLE INVOICE</p>
+      <h1>Invoice Digital</h1>
+    </div>
+    <div class="invoice-badge">Ready</div>
+  </header>
+
+  <main class="invoice-shell">
+    <section class="invoice-card hero-card">
+      <p class="brand-mark">BLOOMELLE</p>
+      <h2>Crafting Nature into Art</h2>
+      <p class="hero-subtitle">Invoice digital otomatis untuk pesanan Anda.</p>
+      <div class="hero-meta">
+        <div><span>Nomor Invoice</span><strong id="invoiceNumber">-</strong></div>
+        <div><span>Tanggal</span><strong id="invoiceDate">-</strong></div>
+        <div><span>Status</span><strong id="invoiceStatus">Menunggu Pembayaran</strong></div>
+      </div>
+    </section>
+
+    <section class="invoice-grid">
+      <article class="invoice-card">
+        <div class="section-title">
+          <p>Detail Pembeli</p>
+          <h3>Informasi penerima</h3>
+        </div>
+        <div class="detail-list">
+          <div><span>Nama</span><strong id="buyerName">-</strong></div>
+          <div><span>Alamat</span><strong id="buyerAddress">-</strong></div>
+          <div><span>Nomor HP</span><strong id="buyerPhone">-</strong></div>
+          <div><span>Nomor Invoice</span><strong id="invoiceNumberCopy">-</strong></div>
+        </div>
+      </article>
+
+      <article class="invoice-card">
+        <div class="section-title">
+          <p>Produk</p>
+          <h3>Rincian pesanan</h3>
+        </div>
+        <div id="invoiceProducts" class="product-table"></div>
+      </article>
+
+      <article class="invoice-card">
+        <div class="section-title">
+          <p>Ringkasan</p>
+          <h3>Biaya pembayaran</h3>
+        </div>
+        <div class="summary-list">
+          <div><span>Subtotal</span><strong id="subtotalProducts">Rp 0</strong></div>
+          <div><span>Ongkir</span><strong id="shippingCost">Rp 0</strong></div>
+          <div><span>Diskon</span><strong id="discountValue">- Rp 0</strong></div>
+          <div><span>Biaya Admin</span><strong id="adminFee">Rp 0</strong></div>
+          <div><span>Total Pembayaran</span><strong id="totalPayment">Rp 0</strong></div>
+        </div>
+      </article>
+
+      <article class="invoice-card">
+        <div class="section-title">
+          <p>Pembayaran</p>
+          <h3>Metode dan status</h3>
+        </div>
+        <div class="payment-box">
+          <div><span>Metode Pembayaran</span><strong id="paymentMethod">-</strong></div>
+          <div><span>Detail Tujuan</span><strong id="paymentTarget">-</strong></div>
+          <div><span>Status</span><strong id="paymentStatus">Menunggu Pembayaran</strong></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="invoice-card qr-card">
+      <div>
+        <p class="section-eyebrow">QR Code Dekoratif</p>
+        <h3>Bloomelle Secure Invoice</h3>
+      </div>
+      <div class="qr-pattern" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <section class="invoice-actions">
+      <button id="printInvoiceBtn" class="secondary-btn" type="button">Cetak Invoice</button>
+      <a href="profile.html" class="secondary-btn link-btn">Lihat Pesanan Saya</a>
+      <a href="index.html#shop" class="primary-btn link-btn">Kembali Belanja</a>
+    </section>
+  </main>
+
+  <div id="toast" class="toast">Bloomelle</div>
+
+  <script src="invoice.js?v=1"></script>
+</body>
+</html>
